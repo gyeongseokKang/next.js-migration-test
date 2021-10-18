@@ -1,0 +1,45 @@
+body {
+  margin: 0;
+  font-family: "Noto Sans CJK KR", "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+    "Helvetica Neue", sans-serif;
+  font-style: "normal";
+  font-weight: 500;
+  /* -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; */
+}
+
+@font-face {
+  font-family: "Noto Sans CJK KR";
+  font-style: normal;
+  font-weight: 100;
+  src: url("public/fonts/NotoSansKR-Light.woff2") format("woff2"),
+    url("public/fonts/NotoSansKR-Light.woff") format("font-woff"),
+    url("public/fonts/NotoSansKR-Light.otf") format("truetype");
+}
+
+@font-face {
+  font-family: "Noto Sans CJK KR";
+  font-style: normal;
+  font-weight: normal;
+  src: url("public/fonts/NotoSansKR-Regular.woff2") format("woff2"),
+    url("public/fonts/NotoSansKR-Regular.woff") format("font-woff"),
+    url("public/fonts/NotoSansKR-Regular.otf") format("truetype");
+}
+
+@font-face {
+  font-family: "Noto Sans CJK KR";
+  font-style: normal;
+  font-weight: 500;
+  src: url("public/fonts/NotoSansKR-Medium.woff2") format("woff2"),
+    url("public/fonts/NotoSansKR-Medium.woff") format("font-woff"),
+    url("public/fonts/NotoSansKR-Medium.otf") format("truetype");
+}
+
+@font-face {
+  font-family: "Noto Sans CJK KR";
+  font-style: normal;
+  font-weight: bold;
+  src: url("public/fonts/NotoSansKR-Bold.woff2") format("woff2"),
+    url("public/fonts/NotoSansKR-Bold.woff") format("font-woff"),
+    url("public/fonts/NotoSansKR-Bold.otf") format("truetype");
+}

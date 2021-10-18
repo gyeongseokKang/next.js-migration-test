@@ -1,0 +1,22 @@
+.swiper-wrapper {
+  align-items: flex-end;
+}
+
+.swiper-pagination {
+  text-align: center;
+}
+
+.timeline-icon {
+  width: 8px;
+  height: 8px;
+  display: inline-block;
+  margin: 0px 10px 0px 10px;
+  font-size: 1.5rem;
+  color: #888;
+  cursor: pointer;
+}
+
+.timeline-icon-active {
+  color: #000;
+  cursor: pointer;
+}

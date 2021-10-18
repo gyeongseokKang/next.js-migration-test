@@ -4,8 +4,8 @@ body {
     "Helvetica Neue", sans-serif;
   font-style: "normal";
   font-weight: 500;
-  /* -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale; */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 @font-face {

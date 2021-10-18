@@ -16,21 +16,19 @@ function App(props) {
 
   return (
     <>
-      <CacheProvider value={emotionCache}>
-        <Head>
-          <title>Roundin</title>
-          <meta charSet="utf-8" />
-          <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-          <link rel="shortcut icon" href="res/ico/favicon.ico" />
-        </Head>
-        <CssBaseline />
-        <ThemeProvider theme={muiTheme}>
-          <RecoilRoot>
-            <Navigator />
-            <Component {...pageProps} />
-          </RecoilRoot>
-        </ThemeProvider>
-      </CacheProvider>
+      <Head>
+        <title>Roundin</title>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <link rel="shortcut icon" href="res/ico/favicon.ico" />
+      </Head>
+      {/* <CssBaseline /> */}
+      <ThemeProvider theme={muiTheme}>
+        <RecoilRoot>
+          <Navigator />
+          <Component {...pageProps} />
+        </RecoilRoot>
+      </ThemeProvider>
     </>
   );
 }

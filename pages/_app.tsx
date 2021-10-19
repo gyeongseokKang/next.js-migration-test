@@ -20,7 +20,7 @@ function App(props) {
         <title>Roundin</title>
         <meta charSet="utf-8" />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <link rel="shortcut icon" href="res/ico/favicon.ico" />
+        <link rel="shortcut icon" href="/favicon/favicon.ico" />
       </Head>
       {/* <CssBaseline /> */}
       <ThemeProvider theme={muiTheme}>

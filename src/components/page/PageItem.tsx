@@ -12,8 +12,6 @@ interface PageItemProp {
   children?: React.ReactNode;
 }
 
-const PageItem = ({ children, className }: PageItemProp) => {
+export const PageItem = ({ children, className }: PageItemProp) => {
   return <StyledPageItem className={className}>{children}</StyledPageItem>;
 };
-
-export default PageItem;

@@ -22,7 +22,7 @@ import TextareaForm from "src/components/form/TextareaForm";
 import LandingPage from "src/components/landingPage/LandingPage";
 import Page from "src/components/page/Page";
 import { TeacherProfile, getTeacherProfile } from "src/service/teacher/getLessonChat";
-import { getFileFromUrl } from "src/utils/service/getFileFromUrl";
+import { getFileFromUrl } from "src/utils/getFileFromUrl";
 
 const TeacherProfileModifyPage = () => {
   const {

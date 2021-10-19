@@ -16,7 +16,7 @@ export interface TeacherProfile {
   snsList: { type: string; url: string }[];
 }
 
-interface TeacherProfileDO {
+export interface TeacherProfileDO {
   status: string;
   result: {
     id: string;
@@ -51,7 +51,9 @@ interface TeacherProfileDO {
   };
 }
 
-export async function getTeacherProfile(teacherId: string): Promise<TeacherProfile | undefined> {
+export async function getTeacherProfile(
+  teacherId: string,
+): Promise<TeacherProfile | undefined> {
   let result: TeacherProfile | undefined = undefined;
 
   if (serviceOnOff === false) {

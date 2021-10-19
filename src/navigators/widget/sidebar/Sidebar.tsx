@@ -8,6 +8,9 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import TeacherSideBar from "./component/TeacherSideBar";
+import { Text } from "src/components";
+
+import { CustomPalette } from "src/theme";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,34 +19,15 @@ const useStyles = makeStyles((theme) => ({
     top: 0,
     zIndex: 500,
   },
-
   title: {
     flexGrow: 1,
     textAlign: "start",
     cursor: "pointer",
   },
-  notiIcon: {
-    margin: "0.25rem",
-    padding: "0.25rem",
-    borderRadius: "50%",
-    "&:hover": {
-      backgroundColor: "red",
-    },
-  },
-  sideMenu: {
-    "& .MuiDrawer-paper": {
-      borderRadius: "20px 0px 0px 20px / 20px 0px 0px 20px",
-    },
-  },
-  menuButton: {
-    margin: "0.25rem",
-    padding: "0.25rem",
-  },
-  menuBottomItem: {
+  sideMenu: { height: "100%", display: "flex", flexDirection: "column" },
+  menuBottomContainer: {
     position: "fixed",
-    bottom: "10px",
-    margin: "1rem",
-    fontSize: "0.75rem",
+    bottom: "3rem",
   },
 }));
 
@@ -54,6 +38,17 @@ interface SideBarProp {
 
 const SideBar = ({ sideBarOpen, closeSideBar }: SideBarProp) => {
   const classes = useStyles();
+
+  const logout = () => {
+    console.log("프로 로그아웃");
+    // if (teacherLogin.loginIn) {
+    //   setTeacherLogin({
+    //     loginIn: false,
+    //     token: "",
+    //   });
+    // }
+  };
+
   return (
     <Drawer
       className={classes.sideMenu}
@@ -70,9 +65,31 @@ const SideBar = ({ sideBarOpen, closeSideBar }: SideBarProp) => {
       >
         <TeacherSideBar />
       </div>
-      <div className={classes.menuBottomItem}>
-        <div>서비스 이용문의</div>
-        <a href="mailto: team.roundin@gmail.com">team.roundin@gmail.com</a>
+      <div className={classes.menuBottomContainer}>
+        <div
+          onClick={() => {
+            logout();
+          }}
+          style={{
+            marginLeft: "1.5rem",
+            marginBottom: "2rem",
+            cursor: "pointer",
+          }}
+        >
+          <Text preset="body_500" color={CustomPalette.grey9}>
+            로그아웃
+          </Text>
+        </div>
+        <div style={{ marginLeft: "1.5rem" }}>
+          <Text preset="small_300" color={CustomPalette.grey6}>
+            서비스 이용문의
+          </Text>
+          <a href="mailto: team.roundin@gmail.com">
+            <Text preset="small_400" color={CustomPalette.grey6}>
+              team.roundin@gmail.com
+            </Text>
+          </a>
+        </div>
       </div>
     </Drawer>
   );

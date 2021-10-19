@@ -1,43 +1,34 @@
 import axios from "axios";
+
 import { SERVER_URL, serviceOnOff, sleep } from "../serviceSetting";
 
-export interface AuthTokeon {
+import { useRecoilState } from "recoil";
+import { teacherLoginState } from "src/stores";
+
+export interface LoginDO {
   token: string;
+  logIn: boolean;
+  qualified: boolean;
+  qualificationPending: boolean;
 }
-var config = {
-  method: "post",
-  url: "13.124.222.71:11809/auth",
-  headers: {},
-};
 
-export async function loginKakao(): Promise<AuthTokeon | false> {
-  let result: AuthTokeon = { token: "" };
+export async function loginKakao(): Promise<LoginDO | false> {
+  const [teacherLogin, setTeacherLogin] = useRecoilState(teacherLoginState);
+  const kakaoCode = new URL(window.location.href).searchParams.get("code");
+  let result: LoginDO | boolean = false;
 
-  if (serviceOnOff === false) {
-    result = { token: "test_token" };
-    await sleep(5000);
-    return result;
+  if (kakaoCode) {
+    axios.get(`${SERVER_URL}/auth/kakaocode?code=${kakaoCode}&state=${"signin,teacher"}`).then((response) => {
+      console.log("called");
+      setTeacherLogin({
+        token: response.data.token.refresh_token,
+        logIn: true,
+        qualified: false,
+        qualificationPending: false,
+      });
+      result = true;
+      // #TODO: need to set this value as a LoginDO variable?
+    });
   }
-
-  // let responseRoundinServer = await axios({
-  //   baseURL: SERVER_URL,
-  //   method: "post",
-  //   url: `/auth`,
-  // });
-
-  // if (responseRoundinServer.data.status !== "ok") return false;
-
-  // console.log("responseRoundinServer", "1차 스탭");
-  // let responseKakaoServer = await axios({
-  //   baseURL: SERVER_URL,
-  //   method: "get",
-  //   url: `${responseRoundinServer.data.url}`,
-  // });
-  // console.log("responseKakaoServer", responseKakaoServer);
-
-  // if (responseKakaoServer.status.toString() === "ok") {
-  //   result = responseKakaoServer.data.result;
-  // }
-
   return result;
 }

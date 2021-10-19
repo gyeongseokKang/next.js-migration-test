@@ -1,53 +1,57 @@
 import React from "react";
 import { useRouter } from "next/router";
-import { styled } from "@mui/material/styles";
-import Button from "@mui/material/Button";
 import { makeStyles } from "@material-ui/core/styles";
-import { CustomColor } from "src/theme";
-
-const StyledButton = styled(Button)({
-  fontSize: "1rem",
-  fontFamily: "inherit",
-  color: CustomColor.menuItem.text,
-  // "&:hover": {
-  //   color: CustomColor.text,
-  //   background: CustomPalette.grey6,
-  // },
-  "& .MuiSvgIcon-root": {
-    fontSize: "2rem !important",
-    color: CustomColor.menuItem.icon,
-  },
-});
+import { Icon, Text } from "src/components";
+import { CustomPalette } from "src/theme";
+import Link from "next/link";
+import { IconTypes } from "src/components/icon";
 
 const useStyles = makeStyles((theme) => ({
-  menuItem: {
+  root: {
     flexGrow: 1,
-    margin: "0.5rem 1rem 0.5rem 1rem",
-    padding: "1rem 1rem 0rem 1rem",
+    marginTop: "2rem",
+    marginLeft: "1.5rem",
+    marginRight: "5rem",
     maxHeight: "50px",
+  },
+  link: {
+    alignItems: "center",
+    color: "black",
+    textDecoration: "none",
   },
 }));
 interface MenuItemProp {
-  icon?: any;
   to: string;
   title: string;
+  icon: IconTypes;
 }
 
-const MenuItem = ({ icon, to, title }: MenuItemProp) => {
+const MenuItem = ({ to, title, icon }: MenuItemProp) => {
   const classes = useStyles();
-  const router = useRouter();
 
+  // 스타일링
   return (
-    <div className={classes.menuItem}>
-      <StyledButton
-        startIcon={icon}
-        onClick={() => {
-          router.push(`${to}`);
-        }}
-      >
-        {title}
-      </StyledButton>
-    </div>
+    <Link href={to}>
+      <a className={classes.link}>
+        <div className={classes.root}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "flex-start",
+              alignItems: "flex-start",
+            }}
+          >
+            <div style={{ marginRight: "0.5rem" }}>
+              <Icon icon={icon} />
+            </div>
+            <Text preset="body_500" color={CustomPalette.grey9}>
+              {title}
+            </Text>
+          </div>
+        </div>
+      </a>
+    </Link>
   );
 };
 

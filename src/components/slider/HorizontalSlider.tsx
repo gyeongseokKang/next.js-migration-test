@@ -3,9 +3,9 @@ import { makeStyles, Theme } from "@material-ui/core/styles";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Pagination } from "swiper";
 
-// import "swiper/swiper.scss";
-// import "swiper/components/navigation/navigation.scss";
-// import "swiper/components/pagination/pagination.scss";
+import "swiper/swiper.scss";
+import "swiper/components/navigation/navigation.scss";
+import "swiper/components/pagination/pagination.scss";
 import "./SwiperSlider.module.scss";
 
 const useStyles = makeStyles((theme: Theme) => ({

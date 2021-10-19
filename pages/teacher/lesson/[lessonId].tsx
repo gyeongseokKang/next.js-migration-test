@@ -7,17 +7,17 @@
 **/
 
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
 import { makeStyles } from "@material-ui/core/styles";
 import { FieldErrors, useForm, UseFormHandleSubmit, UseFormRegister, UseFormWatch } from "react-hook-form";
-import { CustomColor } from "src/theme";
+import { Page, Text } from "src/components";
 import VideoUploadButton from "src/components/button/VideoUploadButton";
 import SectionCard from "src/components/card/SectionCard";
 import SubmitForm from "src/components/form/SubmitForm";
 import TextareaForm from "src/components/form/TextareaForm";
 import VideoPlayer from "src/components/media/VideoPlayer";
-import Page from "src/components/page/Page";
 import HorizontalSlider from "src/components/slider/HorizontalSlider";
+import { getLessonList } from "src/service/teacher/getLessonList";
+import { CustomPalette } from "src/theme";
 
 interface LessonReplyForm {
   replyLetter: string;
@@ -25,7 +25,8 @@ interface LessonReplyForm {
 }
 
 const TeacherLessonReplyPage = () => {
-  const router = useRouter();
+  // let { lessonId } = useParams();
+  // console.log(lessonId);
 
   const {
     register,
@@ -91,8 +92,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     flexDirection: "column",
-    borderRadius: "15px",
-    backgroundColor: CustomColor.section.backgroundLight,
+    backgroundColor: CustomPalette.grey0,
   },
 }));
 
@@ -114,11 +114,20 @@ const TeacherLessonReplyPageView = ({
 
   return (
     <Page>
-      <h3>
-        <strong>{studentName}</strong> 님의 문자 레슨 요청
-      </h3>
-      <SectionCard width={"95%"}>
-        <h4>스윙 영상</h4>
+      <div style={{ marginTop: "1rem", display: "flex", flexDirection: "row" }}>
+        <Text preset="header4_500" color={CustomPalette.grey9}>
+          {studentName}
+        </Text>
+        <Text preset="header4_300" color={CustomPalette.grey9}>
+          님의 문자 레슨 요청
+        </Text>
+      </div>
+      <SectionCard width={"100%"}>
+        <div style={{ marginBottom: "0.5rem" }}>
+          <Text preset="body_500" color={CustomPalette.grey8}>
+            스윙 영상과 질문
+          </Text>
+        </div>
         <HorizontalSlider>
           <VideoPlayer
             url={"https://roundins3.s3.ap-northeast-2.amazonaws.com/tmpimages/694c1ad5-4b1f-4714-8fee-b1aac001a3f2.mp4"}
@@ -127,28 +136,38 @@ const TeacherLessonReplyPageView = ({
             url={"https://roundins3.s3.ap-northeast-2.amazonaws.com/tmpimages/694c1ad5-4b1f-4714-8fee-b1aac001a3f2.mp4"}
           />
         </HorizontalSlider>
+        <div style={{ marginTop: "0.5rem" }}>
+          <Text preset="small_300" color={CustomPalette.grey8}>
+            {question}
+          </Text>
+        </div>
       </SectionCard>
-      <SectionCard width={"95%"}>
-        <h4>질문</h4>
-        <p>{question}</p>
+      <SectionCard width={"100%"}>
+        <div style={{ marginTop: "1rem", marginBottom: "0.5rem" }}>
+          <Text preset="body_500" color={CustomPalette.grey8}>
+            {`${studentName}님의 골프 특징`}
+          </Text>
+        </div>
+        <div style={{ marginBottom: "2rem" }}>
+          <Text preset="small_300" color={CustomPalette.grey8}>
+            {studentInfo}
+          </Text>
+        </div>
       </SectionCard>
-      <SectionCard width={"95%"}>
-        <h4>{studentName}님의 골프 특징</h4>
-        <p>{studentInfo}</p>
-      </SectionCard>
-      <h3>
-        <strong>답변</strong>
-      </h3>
       <form className={classes.form} onSubmit={handleSubmit(submitReplyForm)}>
         {lessonType === "letter" && (
-          <SectionCard width={"95%"}>
-            <h4>문자 답변</h4>
+          <SectionCard width={"100%"}>
+            <div style={{ marginTop: "1rem", marginBottom: "0.5rem" }}>
+              <Text preset="body_500" color={CustomPalette.grey8}>
+                문자 답변
+              </Text>
+            </div>
             <TextareaForm
               register={register}
               registerKey={"replyLetter"}
               errors={errors}
               watch={watch}
-              limit={50}
+              limit={300}
               placeholder={
                 "예시) 문자 레슨은 회원의 스윙에서 보이는 문제와 원인, 해결방법이 포함된 글을 남겨주는 것입니다. 해결방법을 프로님이 기존에 업로드한 적 있는 유튜브, 인스타그램 게시글로 제시하는 것도 효과적인 방법입니다."
               }
@@ -157,21 +176,29 @@ const TeacherLessonReplyPageView = ({
         )}
         {lessonType !== "video" && (
           <>
-            <SectionCard width={"95%"}>
-              <h4>영상 답변</h4>
-              <div style={{ display: "flex" }}>
+            <SectionCard width={"100%"}>
+              <div style={{ marginTop: "2rem", marginBottom: "0.5rem" }}>
+                <Text preset="body_500" color={CustomPalette.grey8}>
+                  영상 답변
+                </Text>
+              </div>
+              <div style={{ display: "flex", flexDirection: "row" }}>
                 <VideoUploadButton swingType={"reply"} video={highlightSwingVideo} uploadVideo={uploadHighlightVideo} />
                 <VideoUploadButton swingType={"reply"} video={highlightSwingVideo} uploadVideo={uploadHighlightVideo} />
               </div>
             </SectionCard>
-            <SectionCard width={"95%"}>
-              <h4>코멘트</h4>
+            <SectionCard width={"100%"}>
+              <div style={{ marginBottom: "0.5rem" }}>
+                <Text preset="body_500" color={CustomPalette.grey8}>
+                  코멘트
+                </Text>
+              </div>
               <TextareaForm
                 register={register}
                 registerKey={"replayComment"}
                 errors={errors}
                 watch={watch}
-                limit={50}
+                limit={300}
                 placeholder={
                   "예시) 영상 레슨은 2분 가량의 맞춤형 영상을 찍어서 제공해주시면 됩니다. 추가로 남겨주실 코멘트가 있다면 함께 적어주세요."
                 }
@@ -186,7 +213,3 @@ const TeacherLessonReplyPageView = ({
 };
 
 export default TeacherLessonReplyPage;
-
-function getLessonList() {
-  throw new Error("Function not implemented.");
-}

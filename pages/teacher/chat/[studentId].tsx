@@ -8,22 +8,24 @@
 
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import WavyTextButton from "src/components/button/WavyTextButton";
-import SectionCard from "src/components/card/SectionCard";
-import Page from "src/components/page/Page";
-import PageItem from "src/components/page/PageItem";
-import ChatItem from "src/widget/ChatItem";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { Page, PageItem, Text } from "src/components";
 import { useRouter } from "next/router";
+
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+
+import { Button } from "@material-ui/core";
+import SectionCard from "src/components/card/SectionCard";
+import { CustomPalette } from "src/theme";
+import ChatItem from "src/widget/ChatItem";
 
 const TeacherChatRoomPage = () => {
   const router = useRouter();
+  const { studentId } = router.query;
 
   const goLessonListPage = () => {
     router.push(`/teacher/lesson`);
   };
   const goReplyPage = () => {
-    const { studentId } = router.query;
     router.push(`/teacher/lesson/${studentId}`);
   };
 
@@ -41,12 +43,19 @@ interface TeacherChatRoomPageVAProp {
 }
 
 const useStyles = makeStyles((theme) => ({
-  btnLayout: {
-    display: "flex",
-    justifyContent: "center",
-    minHeight: "4rem",
-    "& > button": {
-      height: "2.5rem",
+  feedbackButton: {
+    marginTop: "1rem",
+    marginBottom: "2rem",
+    width: "100%",
+    height: "3.5rem",
+    background: CustomPalette.primary5,
+    cursor: "pointer",
+    fontSize: "1rem",
+    color: CustomPalette.white,
+    border: "none",
+    borderRadius: "0.75rem",
+    "&:hover": {
+      backgroundColor: CustomPalette.primary5,
     },
   },
 }));
@@ -60,14 +69,17 @@ const TeacherChatRoomPageView = ({ goLessonListPage, goReplyPage }: TeacherChatR
     <Page>
       <PageItem>
         <ArrowBackIcon
-          style={{ margin: "0.5rem" }}
+          style={{ marginRight: "0.5rem", cursor: "pointer" }}
           onClick={() => {
             goLessonListPage();
           }}
         />
-        <h3>최경민</h3>
+        <Text preset="header4_400" color={CustomPalette.grey9}>
+          최경민
+        </Text>
+        {/* studentName */}
       </PageItem>
-      <SectionCard width={"95%"}>
+      <SectionCard>
         <ChatItem
           lessonType={"video"}
           chatType={"you"}
@@ -80,9 +92,9 @@ const TeacherChatRoomPageView = ({ goLessonListPage, goReplyPage }: TeacherChatR
         <ChatItem lessonType={"letter"} chatType={"you"} />
       </SectionCard>
       <SectionCard>
-        <div className={classes.btnLayout}>
-          <WavyTextButton text={"피드백 하기"} onClick={goReplyPage} />
-        </div>
+        <Button onClick={goReplyPage} className={classes.feedbackButton}>
+          피드백 하기
+        </Button>
       </SectionCard>
     </Page>
   );

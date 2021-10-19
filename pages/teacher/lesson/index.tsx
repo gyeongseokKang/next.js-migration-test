@@ -8,12 +8,12 @@
 
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import SectionCard from "src/components/card/SectionCard";
 import LandingPage from "src/components/landingPage/LandingPage";
-import Page from "src/components/page/Page";
 import { Lesson, getLessonList } from "src/service/teacher/getLessonList";
 import { useRouter } from "next/router";
 import LessonStatusCard from "src/widget/LessonStatusCard";
+import { CustomPalette } from "src/theme";
+import { Page, Text, Icon } from "src/components";
 
 const TeacherLessonPage = () => {
   const [lessonList, setLessonList] = useState<Lesson[]>();
@@ -27,50 +27,89 @@ const TeacherLessonPage = () => {
   }, []);
 
   const TeacherLessonPageVAProp: TeacherLessonPageVAProp = {
-    lessonList: lessonList,
+    lessonSummaryList: lessonList,
   };
   return <TeacherLessonPageView {...TeacherLessonPageVAProp} />;
 };
 
 interface TeacherLessonPageVAProp {
-  lessonList: Lesson[] | undefined;
+  lessonSummaryList: Lesson[] | undefined;
 }
 
 const useStyles = makeStyles((theme) => ({
-  lessonCountLayout: {
-    width: "90%",
-    "& > span": {
-      color: "#25D15C",
-    },
+  LessonListPage: {
+    display: "flex",
+    flexDirection: "column",
   },
-
+  lessonCountLayout: {
+    width: "100%",
+    marginTop: "0.75rem",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  headerLayout: {
+    backgroundColor: CustomPalette.white,
+    display: "flex",
+    flexDirection: "column",
+  },
   lessonListLayout: {
     width: "100%",
     height: "100%",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    backgroundColor: "#F5F6F8",
     overflowY: "scroll",
+  },
+  "@global": {
+    "*::-webkit-scrollbar": {
+      width: "0.4em",
+    },
+    "*::-webkit-scrollbar-track": {
+      "-webkit-box-shadow": "inset 0 0 6px rgba(0,0,0,0.00)",
+    },
+    "*::-webkit-scrollbar-thumb": {
+      backgroundColor: "#2E2E2E",
+      outline: "1px solid #E6E6FF",
+      borderRadius: "20px",
+    },
   },
 }));
 
-const TeacherLessonPageView = ({ lessonList }: TeacherLessonPageVAProp) => {
+const TeacherLessonPageView = ({ lessonSummaryList }: TeacherLessonPageVAProp) => {
   const classes = useStyles();
   const router = useRouter();
-  console.log("TeacherLessonPageView render");
 
   return (
-    <Page>
-      <h3>레슨 목록</h3>
-      <SectionCard width={"95%"}>
-        <div className={classes.lessonCountLayout}>
-          총 <span>{lessonList ? lessonList.length : "-"}</span>개
+    <Page className={classes.LessonListPage}>
+      <div className={classes.headerLayout}>
+        <Text preset="header4_400" color={CustomPalette.grey9}>
+          내 지난 레슨목록
+        </Text>
+      </div>
+      <div className={classes.lessonCountLayout}>
+        <div style={{ display: "flex", flexDirection: "row" }}>
+          <Text preset="body_300" color={CustomPalette.grey6}>
+            총
+          </Text>
+          <Text preset="body_500" color={CustomPalette.primary5}>
+            {` ${lessonSummaryList ? lessonSummaryList.length : 0}`}
+          </Text>
+          <Text preset="body_300" color={CustomPalette.grey6}>
+            개
+          </Text>
         </div>
-      </SectionCard>
-      <SectionCard width={"95%"}>
-        {lessonList ? (
-          lessonList.map((item) => {
+        <div style={{ display: "flex", flexDirection: "row" }}>
+          <Text preset="body_300" color={CustomPalette.grey6}>
+            모든 레슨
+          </Text>
+          <Icon icon="expand" size={18} />
+          {/* #TODO: filter 로직 적용 */}
+        </div>
+      </div>
+      <div className={classes.lessonListLayout}>
+        {lessonSummaryList ? (
+          lessonSummaryList.map((item) => {
             return (
               <LessonStatusCard
                 key={`${item.userName}`}
@@ -88,9 +127,8 @@ const TeacherLessonPageView = ({ lessonList }: TeacherLessonPageVAProp) => {
         ) : (
           <LandingPage landingTitle={"레슨 목록을 가져오는 중입니다..."} />
         )}
-      </SectionCard>
+      </div>
     </Page>
   );
 };
-
 export default TeacherLessonPage;

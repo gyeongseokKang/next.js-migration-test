@@ -7,6 +7,17 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+::-webkit-scrollbar {
+  width: 0.4em;
+}
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: "inset 0 0 6px rgba(0,0,0,0.00)";
+}
+::-webkit-scrollbar-thumb {
+  background-color: "#2E2E2E";
+  outline: "1px solid #E6E6Fr";
+  border-radius: "20px";
+}
 
 @font-face {
   font-family: "Noto Sans CJK KR";

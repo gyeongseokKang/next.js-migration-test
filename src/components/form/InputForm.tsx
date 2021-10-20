@@ -1,7 +1,8 @@
 import React from "react";
 import { FieldErrors, UseFormRegister, ValidationRule } from "react-hook-form";
 import { makeStyles } from "@material-ui/core/styles";
-import { CustomColor } from "src/theme";
+import { CustomColor, CustomPalette } from "src/theme";
+import { Text } from "src/components";
 
 interface InputFormProp {
   registerKey: string;
@@ -23,10 +24,12 @@ const useStyles = makeStyles((theme) => ({
     marginBlockStart: "0.5rem",
   },
   input: {
-    height: "1rem",
+    marginTop: "0.5rem",
+    width: "-webkit-fill-available",
+    height: "3rem",
+    paddingLeft: "1rem",
     resize: "none",
-    padding: "1rem",
-    borderRadius: "10px",
+    borderRadius: "0.75rem",
     border: `1px solid ${CustomColor.input.border}`,
     fontFamily: "inherit",
     "&:focus": {
@@ -55,8 +58,12 @@ const InputForm = ({
 }: InputFormProp) => {
   const classes = useStyles();
   return (
-    <>
-      {labelText && <h5 className={classes.labelText}>{labelText}</h5>}
+    <div style={style}>
+      {labelText && (
+        <Text preset="small_400" color={CustomPalette.grey7}>
+          {labelText}
+        </Text>
+      )}
       <input
         className={classes.input}
         {...register(registerKey, {
@@ -67,7 +74,7 @@ const InputForm = ({
         placeholder={placeholder}
       />
       {errorText && <div className={classes.errorMsg}>{errors[registerKey] && errorText}</div>}
-    </>
+    </div>
   );
 };
 

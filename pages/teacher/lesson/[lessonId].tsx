@@ -25,9 +25,6 @@ interface LessonReplyForm {
 }
 
 const TeacherLessonReplyPage = () => {
-  // let { lessonId } = useParams();
-  // console.log(lessonId);
-
   const {
     register,
     handleSubmit,

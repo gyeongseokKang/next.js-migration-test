@@ -3,27 +3,34 @@ import { makeStyles } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
 import ClearIcon from "@material-ui/icons/Clear";
 import { useEffect } from "react";
+import { CustomColor, CustomPalette } from "src/theme";
 
 const useStyles = makeStyles((theme) => ({
   VideoUploadButton: {
+    display: "flex",
+    flexDirection: "column",
+    width: "100%",
+    height: "9rem",
+  },
+  VideoUploadButtonSmall: {
+    marginRight: "0.75rem",
     width: "7rem",
     height: "7rem",
-    display: "flex",
   },
   video: {
-    width: "6rem",
-    height: "6rem",
-    margin: "0.5rem",
-    borderRadius: "10px",
-    border: "1px solid",
+    width: "100%",
+    height: "100%",
+    borderRadius: "0.75rem",
   },
-  addImgBtn: {
-    backgroundColor: "#E9ECEF",
-    padding: "1.5rem",
-    margin: "0.5rem",
-    fontSize: "3rem",
-    color: "#ADB5BD",
-    borderRadius: "10px",
+  addBtn: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    height: "100%",
+    borderRadius: "0.75rem",
+    color: CustomColor.button.grey,
+    backgroundColor: CustomPalette.grey1,
   },
   clearVideoIcon: {
     float: "right",
@@ -56,39 +63,75 @@ const VideoUploadButton = ({ swingType, video, uploadVideo }: VideoUploadButtonP
   const clearUploadVideo = () => {
     uploadVideo(undefined);
   };
-  return (
-    <div className={classes.VideoUploadButton}>
-      {uploadedVideo.length > 0 ? (
-        <>
-          <video className={classes.video}>
-            <source src={uploadedVideo} />
-          </video>
-          <ClearIcon
-            className={classes.clearVideoIcon}
-            onClick={() => {
-              clearUploadVideo();
-            }}
-          />
-        </>
-      ) : (
-        <>
-          <label htmlFor={`videoInput-${swingType}`}>
-            <AddIcon className={classes.addImgBtn} />
-          </label>
-          <input
-            id={`videoInput-${swingType}`}
-            type="file"
-            style={{ display: "none" }}
-            onChange={(e) => {
-              if (e.target.files) {
-                uploadVideo(e.target.files[0]);
-              }
-            }}
-          />
-        </>
-      )}
-    </div>
-  );
+
+  if (swingType === "highlight")
+    return (
+      <div className={classes.VideoUploadButton}>
+        {uploadedVideo.length > 0 ? (
+          <>
+            <video className={classes.video}>
+              <source src={uploadedVideo} />
+            </video>
+            <ClearIcon
+              className={classes.clearVideoIcon}
+              onClick={() => {
+                clearUploadVideo();
+              }}
+            />
+          </>
+        ) : (
+          <>
+            <label className={classes.addBtn} htmlFor={`videoInput-${swingType}`}>
+              <AddIcon />
+            </label>
+            <input
+              id={`videoInput-${swingType}`}
+              type="file"
+              style={{ display: "none" }}
+              onChange={(e) => {
+                if (e.target.files) {
+                  uploadVideo(e.target.files[0]);
+                }
+              }}
+            />
+          </>
+        )}
+      </div>
+    );
+  else
+    return (
+      <div className={classes.VideoUploadButtonSmall}>
+        {uploadedVideo.length > 0 ? (
+          <>
+            <video className={classes.video}>
+              <source src={uploadedVideo} />
+            </video>
+            <ClearIcon
+              className={classes.clearVideoIcon}
+              onClick={() => {
+                clearUploadVideo();
+              }}
+            />
+          </>
+        ) : (
+          <>
+            <label className={classes.addBtn} htmlFor={`videoInput-${swingType}`}>
+              <AddIcon />
+            </label>
+            <input
+              id={`videoInput-${swingType}`}
+              type="file"
+              style={{ display: "none" }}
+              onChange={(e) => {
+                if (e.target.files) {
+                  uploadVideo(e.target.files[0]);
+                }
+              }}
+            />
+          </>
+        )}
+      </div>
+    );
 };
 
 export default VideoUploadButton;

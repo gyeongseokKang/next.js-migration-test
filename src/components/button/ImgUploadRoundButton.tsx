@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { SyntheticEvent, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import ClearIcon from "@material-ui/icons/Clear";
 import { useEffect } from "react";
 import CameraAltOutlinedIcon from "@mui/icons-material/CameraAltOutlined";
-import { CustomColor } from "src/theme";
-import ErrorSupportImg from "../image/ErrorSupportImg";
+import logo from "images/logo.png";
+import { CustomColor, CustomPalette } from "src/theme";
 
 const useStyles = makeStyles((theme) => ({
   ImgUploadRoundButton: {
@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     margin: "0.5rem",
     borderRadius: "100%",
     color: CustomColor.button.grey,
-    backgroundColor: CustomColor.button.lightgrey,
+    backgroundColor: CustomPalette.grey1,
   },
   clearIcon: {
     position: "absolute",
@@ -60,7 +60,15 @@ const ImgUploadRoundButton = ({ image, uploadimage }: ImgUploadRoundButtonProp) 
     <div className={classes.ImgUploadRoundButton}>
       {uploadedimage.length > 0 ? (
         <>
-          <ErrorSupportImg className={classes.image} imgSrc={uploadedimage} altText={`업로드 사진`} />
+          <img
+            className={classes.image}
+            src={uploadedimage}
+            onError={(e: SyntheticEvent<HTMLImageElement, Event>) => {
+              e.currentTarget.onerror = null;
+              e.currentTarget.src = `${logo}`;
+            }}
+            alt={`업로드 사진`}
+          />
           <ClearIcon
             className={classes.clearIcon}
             onClick={() => {

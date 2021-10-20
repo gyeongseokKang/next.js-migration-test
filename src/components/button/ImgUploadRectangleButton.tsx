@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { SyntheticEvent, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { useEffect } from "react";
+import logo from "images/logo.png";
 import AddIcon from "@material-ui/icons/Add";
 import ClearIcon from "@material-ui/icons/Clear";
-import { CustomColor } from "src/theme";
-import ErrorSupportImg from "../image/ErrorSupportImg";
+import { CustomColor, CustomPalette } from "src/theme";
 
 const useStyles = makeStyles((theme) => ({
   imgUploadRectangleButton: {
@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   image: {
     width: "100%",
     height: "9rem",
-    borderRadius: "15px",
+    borderRadius: "0.75rem",
   },
   addBtn: {
     display: "flex",
@@ -24,9 +24,9 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     width: "100%",
     height: "9rem",
-    borderRadius: "15px",
+    borderRadius: "0.75rem",
     color: CustomColor.button.grey,
-    backgroundColor: CustomColor.button.lightgrey,
+    backgroundColor: CustomPalette.grey1,
   },
   iconLayout: {
     display: "flex",
@@ -68,7 +68,15 @@ const ImgUploadRectangleButton = ({ image, uploadimage }: ImgUploadRectangleButt
     <div className={classes.imgUploadRectangleButton}>
       {uploadedimage.length > 0 ? (
         <>
-          <ErrorSupportImg className={classes.image} imgSrc={uploadedimage} altText={`업로드 사진`} />
+          <img
+            className={classes.image}
+            src={uploadedimage}
+            onError={(e: SyntheticEvent<HTMLImageElement, Event>) => {
+              e.currentTarget.onerror = null;
+              e.currentTarget.src = `${logo}`;
+            }}
+            alt={`업로드 사진`}
+          />
         </>
       ) : (
         <>
@@ -96,6 +104,12 @@ const ImgUploadRectangleButton = ({ image, uploadimage }: ImgUploadRectangleButt
                 clearUploadimage();
               }}
             />
+            {/* <ClearIcon
+              className={classes.clearIcon}
+              onClick={() => {
+                clearUploadimage();
+              }}
+            /> */}
           </div>
         </>
       ) : undefined}

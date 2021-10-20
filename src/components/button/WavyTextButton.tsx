@@ -2,7 +2,7 @@ import React from "react";
 import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import WavyText from "../text/WavyText";
-import { CustomColor, CustomPalette } from "src/theme";
+import { CustomPalette, CustomColor } from "src/theme";
 
 const StyledButton = styled(Button)({
   display: "flex",

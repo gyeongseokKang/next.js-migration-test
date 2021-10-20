@@ -20,16 +20,16 @@ const useStyles = makeStyles((theme) => ({
     color: CustomColor.input.label,
     marginBlockStart: "0.5rem",
   },
-  selectInput: {
+  selectContainer: {
     display: "flex",
     width: "100%",
-    height: "2rem",
-    marginBlockEnd: "0.25rem",
+    height: "3rem",
+    marginBlockEnd: "0.75rem",
     "& > select": {
       fontFamily: "inherit",
       flexGrow: "1",
       border: `1px solid ${CustomColor.input.border}`,
-      borderRadius: "10px",
+      borderRadius: "0.75rem",
       textAlign: "center",
       "&:focus": {
         borderColor: CustomColor.input.borderFocus,
@@ -40,8 +40,8 @@ const useStyles = makeStyles((theme) => ({
       fontFamily: "inherit",
       flexGrow: "6",
       border: `1px solid ${CustomColor.input.border}`,
-      borderRadius: "10px",
-      marginInlineStart: "0.25rem",
+      borderRadius: "0.75rem",
+      marginInlineStart: "0.5rem",
       paddingInlineStart: "1rem",
       "&:focus": {
         borderColor: CustomColor.input.borderFocus,
@@ -68,9 +68,9 @@ const SelectInputForm = ({
 }: SelectInputFormProp) => {
   const classes = useStyles();
   return (
-    <>
+    <div style={style}>
       {labelText && <h5 className={classes.labelText}>{labelText}</h5>}
-      <div className={classes.selectInput}>
+      <div className={classes.selectContainer}>
         <select {...register(registerKey)}>
           {option.map((item) => {
             return (
@@ -83,7 +83,7 @@ const SelectInputForm = ({
         <input {...register(`${registerKey}-input`)} placeholder={placeholder} />
         {errorText && <div className={classes.errorMsg}>{errors[registerKey] && errorText}</div>}
       </div>
-    </>
+    </div>
   );
 };
 

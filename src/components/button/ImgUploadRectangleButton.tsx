@@ -1,7 +1,6 @@
 import React, { SyntheticEvent, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { useEffect } from "react";
-import logo from "images/logo.png";
 import AddIcon from "@material-ui/icons/Add";
 import ClearIcon from "@material-ui/icons/Clear";
 import { CustomColor, CustomPalette } from "src/theme";
@@ -73,7 +72,7 @@ const ImgUploadRectangleButton = ({ image, uploadimage }: ImgUploadRectangleButt
             src={uploadedimage}
             onError={(e: SyntheticEvent<HTMLImageElement, Event>) => {
               e.currentTarget.onerror = null;
-              e.currentTarget.src = `${logo}`;
+              e.currentTarget.src = "/images/logo.png";
             }}
             alt={`업로드 사진`}
           />

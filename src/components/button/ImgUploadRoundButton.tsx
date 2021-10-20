@@ -3,7 +3,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import ClearIcon from "@material-ui/icons/Clear";
 import { useEffect } from "react";
 import CameraAltOutlinedIcon from "@mui/icons-material/CameraAltOutlined";
-import logo from "images/logo.png";
 import { CustomColor, CustomPalette } from "src/theme";
 
 const useStyles = makeStyles((theme) => ({
@@ -65,7 +64,7 @@ const ImgUploadRoundButton = ({ image, uploadimage }: ImgUploadRoundButtonProp) 
             src={uploadedimage}
             onError={(e: SyntheticEvent<HTMLImageElement, Event>) => {
               e.currentTarget.onerror = null;
-              e.currentTarget.src = `${logo}`;
+              e.currentTarget.src = `images/logo.png`;
             }}
             alt={`업로드 사진`}
           />

@@ -7,9 +7,10 @@
 **/
 
 import React, { useState } from "react";
-import { useRouter } from "next/router";
 import { makeStyles } from "@material-ui/core/styles";
+import { Page, Text } from "src/components";
 import Button from "@material-ui/core/Button";
+
 import { FieldErrors, useForm, UseFormHandleSubmit, UseFormRegister, UseFormWatch } from "react-hook-form";
 import ImgUploadRectangleButton from "src/components/button/ImgUploadRectangleButton";
 import ImgUploadRoundButton from "src/components/button/ImgUploadRoundButton";
@@ -19,7 +20,8 @@ import InputForm from "src/components/form/InputForm";
 import SelectInputForm from "src/components/form/SelectInputForm";
 import SubmitForm from "src/components/form/SubmitForm";
 import TextareaForm from "src/components/form/TextareaForm";
-import Page from "src/components/page/Page";
+import { CustomPalette } from "src/theme";
+import { useRouter } from "next/router";
 
 interface TeacherRegisterForm {
   name: string;
@@ -45,7 +47,7 @@ const TeacherProfileRegisterPage = () => {
   const [profileImg, setProfileImg] = useState<File | undefined>();
   const [profilebgImg, setProfilebgImg] = useState<File | undefined>();
   const [highlightSwingVideo, sethighlightSwingVideo] = useState<File | undefined>();
-  const router = useRouter();
+  let router = useRouter();
 
   const submitRegisterForm = (data: TeacherRegisterForm) => {
     if ("proHistory-1" in data) {
@@ -92,9 +94,6 @@ interface TeacherProfileRegisterPageVAProp {
 }
 
 const useStyles = makeStyles((theme) => ({
-  img: {
-    width: "30%",
-  },
   form: {
     width: "100%",
     display: "flex",
@@ -110,20 +109,20 @@ const useStyles = makeStyles((theme) => ({
     },
     marginBlockEnd: "0.25rem",
   },
-  historyAddBtnLayout: {
+  careerAddButtonContainer: {
     display: "flex",
     justifyContent: "flex-end",
-    "& > button": {
-      width: "100px",
-      height: "2rem",
-      border: "0px",
-      maxWidth: "300px",
-      marginBlockStart: "0.5rem",
-      marginBlockEnd: "1rem",
-      background: "#F5F6F8",
-      color: "#363649",
-      borderRadius: "5px",
-    },
+  },
+  careerAddButton: {
+    width: "100px",
+    height: "3rem",
+    border: "0px",
+    maxWidth: "300px",
+    marginBlockStart: "0.5rem",
+    marginBlockEnd: "1rem",
+    background: CustomPalette.grey0,
+    color: CustomPalette.grey8,
+    borderRadius: "0.75rem",
   },
 }));
 
@@ -166,18 +165,32 @@ const TeacherProfileRegisterPageVAPropView = ({
   };
   return (
     <Page>
-      <h3>라운드인 프로 등록 신청</h3>
-      <SectionCard width={"95%"}>
-        <h4>프로필 사진</h4>
+      <Text preset="header4_400" color={CustomPalette.grey9}>
+        라운드인 프로 등록 신청
+      </Text>
+      <SectionCard width={"100%"}>
+        <div style={{ marginBottom: "0.5rem" }}>
+          <Text preset="body_500" color={CustomPalette.grey8}>
+            프로필 사진
+          </Text>
+        </div>
         <ImgUploadRoundButton image={profileImg} uploadimage={uploadProfileImg} />
       </SectionCard>
-      <SectionCard width={"95%"}>
-        <h4>배경 사진</h4>
+      <SectionCard width={"100%"}>
+        <div style={{ marginBottom: "0.5rem" }}>
+          <Text preset="body_500" color={CustomPalette.grey8}>
+            배경 사진
+          </Text>
+        </div>
         <ImgUploadRectangleButton image={profilebgImg} uploadimage={uploadProfilebgImg} />
       </SectionCard>
       <form className={classes.form} onSubmit={handleSubmit(submitRegisterForm)}>
-        <SectionCard width={"95%"}>
-          <h4>기본 정보</h4>
+        <SectionCard width={"100%"}>
+          <div style={{ marginBottom: "0.5rem" }}>
+            <Text preset="body_500" color={CustomPalette.grey8}>
+              기본 정보
+            </Text>
+          </div>
           <InputForm
             required={true}
             register={register}
@@ -187,6 +200,7 @@ const TeacherProfileRegisterPageVAPropView = ({
             placeholder={"홍길동"}
             errorText={"이름을 제대로 입력해주세요."}
             pattern={/^[A-Za-zㄱ-ㅎㅏ-ㅣ가-힣]+$/i}
+            style={{ marginBottom: "1rem" }}
           />
           <InputForm
             required={true}
@@ -197,6 +211,7 @@ const TeacherProfileRegisterPageVAPropView = ({
             placeholder={"010-1234-5678"}
             errorText={"핸드폰 번호를 제대로 입력해주세요."}
             pattern={/^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/}
+            style={{ marginBottom: "1rem" }}
           />
           <InputForm
             required={true}
@@ -205,67 +220,88 @@ const TeacherProfileRegisterPageVAPropView = ({
             errors={errors}
             labelText={"레슨 경력"}
             placeholder={"3년"}
+            style={{ marginBottom: "1rem" }}
           />
         </SectionCard>
-        <SectionCard width={"95%"}>
-          <h4>골프 프로 이력</h4>
+        <SectionCard width={"100%"}>
+          <div style={{ marginBottom: "0.5rem" }}>
+            <Text preset="body_500" color={CustomPalette.grey8}>
+              골프 관련 이력
+            </Text>
+          </div>
           {historyFormGroup}
-          <div className={classes.historyAddBtnLayout}>
+          <div className={classes.careerAddButtonContainer}>
             <Button
               variant="outlined"
               onClick={() => {
                 addHistoryForm();
               }}
+              className={classes.careerAddButton}
             >
               이력 추가
             </Button>
           </div>
         </SectionCard>
-        <SectionCard width={"95%"}>
-          <h4>프로님을 소개해주세요</h4>
-          <h5>한 줄 소개</h5>
+        <SectionCard width={"100%"}>
+          <div style={{ marginBottom: "0.5rem" }}>
+            <Text preset="body_500" color={CustomPalette.grey8}>
+              프로님을 소개해주세요
+            </Text>
+          </div>
           <TextareaForm
+            labelText={"한 줄 소개"}
             register={register}
             registerKey={"introductionShort"}
             errors={errors}
             watch={watch}
-            limit={50}
+            limit={20}
             placeholder={"저는 OOOO한 골퍼입니다. 잘 가르칩니다 ㅎㅎ"}
           />
-          <h5>상세 소개</h5>
           <TextareaForm
+            labelText={"상세 소개"}
             register={register}
             registerKey={"introductionDetail"}
             errors={errors}
             watch={watch}
-            limit={200}
+            limit={150}
             placeholder={"저는 OOOO한 골퍼입니다. 잘 가르칩니다 ㅎㅎ 자신있는 것은 !~!~!~입니다"}
           />
         </SectionCard>
-        <SectionCard width={"95%"}>
-          <h4>레슨 요청 사항</h4>
+        <SectionCard width={"100%"}>
+          <div style={{ marginBottom: "0.5rem" }}>
+            <Text preset="body_500" color={CustomPalette.grey8}>
+              레슨 요청사항
+            </Text>
+          </div>
           <TextareaForm
             register={register}
             registerKey={"recommendation"}
             errors={errors}
             watch={watch}
-            limit={200}
+            limit={150}
             placeholder={"키와 몸무게, 왼손잡이 or 오른손잡이, 성별등을 알려주셔야 개인별 맞춤 답변이 가능합니다."}
           />
         </SectionCard>
-        <SectionCard width={"95%"}>
-          <h4>스윙 하이라이트 영상을 등록해주세요</h4>
+        <SectionCard width={"100%"}>
+          <div style={{ marginBottom: "0.5rem" }}>
+            <Text preset="body_500" color={CustomPalette.grey8}>
+              스윙 하이라이트 영상 등록
+            </Text>
+          </div>
           <VideoUploadButton swingType={"highlight"} video={highlightSwingVideo} uploadVideo={uploadHighlightVideo} />
         </SectionCard>
-        <SectionCard width={"95%"}>
-          <h4>SNS 정보</h4>
+        <SectionCard width={"100%"}>
+          <div style={{ marginBottom: "0.5rem" }}>
+            <Text preset="body_500" color={CustomPalette.grey8}>
+              SNS
+            </Text>
+          </div>
           <InputForm
             register={register}
             registerKey={"youtube"}
             defaultValue={"youtube.com/channel/"}
             errors={errors}
             labelText={"유튜브"}
-            placeholder={"홍길동"}
           />
           <InputForm
             register={register}
@@ -273,7 +309,6 @@ const TeacherProfileRegisterPageVAPropView = ({
             defaultValue={"instagram.com/"}
             errors={errors}
             labelText={"인스타그램"}
-            placeholder={"010-1234-5678"}
           />
         </SectionCard>
         <SubmitForm text={"프로 등록 신청"} />

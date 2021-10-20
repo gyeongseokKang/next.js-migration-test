@@ -8,7 +8,8 @@
 
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Page from "src/components/page/Page";
+import { Text, Page } from "src/components";
+import { CustomPalette } from "src/theme";
 
 const useStyles = makeStyles((theme) => ({
   teacherProfileWaitPage: {
@@ -24,10 +25,15 @@ const TeacherProfileWaitPage = () => {
 
   return (
     <Page className={classes.teacherProfileWaitPage}>
-      <div>신청서 접수 완료!</div>
-      <br />
-      <div>심사가 완료되면 문자로 </div>
-      <div>심사 결과를 알려드리겠습니다.</div>
+      <Text preset="header4_300" color={CustomPalette.grey8}>
+        신청서 접수 완료!
+      </Text>
+      <Text preset="header4_300" color={CustomPalette.grey8}>
+        심사가 완료되면 문자로
+      </Text>
+      <Text preset="header4_300" color={CustomPalette.grey8}>
+        심사 결과를 알려드리겠습니다.
+      </Text>
     </Page>
   );
 };
